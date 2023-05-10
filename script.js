@@ -1,14 +1,8 @@
 
 // Declaring variable
 const section = document.querySelector('section');
-const playerLivesCount = document.querySelector('span');
-let playerLives = 6;
 
-//Link text
-playerLivesCount.textContent = playerLives;
-
-//Generate the data
-
+//defining the cards and their sources
 const getData = () => [
   { imgSrc: './images/babyface.webp', name: 'babyface' },
   { imgSrc: './images/crying face.jpeg', name: 'cryface' },
@@ -24,8 +18,7 @@ const getData = () => [
   { imgSrc: './images/what.jpeg', name: 'what' }
 ];
 
-//randomize
-
+//randomizing the order of the cards by setting 
 const randomize = () => {
   const cardData = getData();
   cardData.sort(() => Math.random() - 0.5);
@@ -33,7 +26,6 @@ const randomize = () => {
 };
 
 //card generator function
-
 const cardGenerator = () => {
   const cardData = randomize();
 
@@ -89,11 +81,7 @@ const checkCards = (e) => {
         card.classList.remove('flipped');
         setTimeout(() => card.classList.remove('toggleCard'), 1000);
       });
-      playerLives--;
-      playerLivesCount.textContent = playerLives;
-      if (playerLives === 0) {
-        setTimeout(() => restart("Try Again!"), 1000);
-      }
+      
     }
   //Run a check to see if we won the game
 
@@ -122,10 +110,6 @@ const restart = (text) => {
       section.style.pointerEvents = 'all';
     }, 100)
   });
-  playerLives = 6;
-  playerLivesCount.textContent = playerLives;
-  setTimeout(() => window.alert(text), 100);
-
 };
 
 cardGenerator();
