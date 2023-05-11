@@ -1,8 +1,7 @@
-
-// Declaring variable
+// Declaring variables
 const section = document.querySelector('section');
 
-//defining the cards and their sources
+//defining getData function, return array of objects
 const getData = () => [
   { imgSrc: './images/babyface.webp', name: 'babyface' },
   { imgSrc: './images/crying face.jpeg', name: 'cryface' },
@@ -18,83 +17,106 @@ const getData = () => [
   { imgSrc: './images/what.jpeg', name: 'what' }
 ];
 
-//randomizing the order of the cards by setting 
+//defining cardData with getData, randomizing, sorting and returning the order of the cardData, and setting that to randomize function.
 const randomize = () => {
   const cardData = getData();
   cardData.sort(() => Math.random() - 0.5);
   return cardData;
 };
 
-//card generator function
+//generate cards based on randomized cardData; define it with cardGenerator function
 const cardGenerator = () => {
-  const cardData = randomize();
+  const cardData = randomize(); //calling randomize() to get random sorted cardData
 
-  //generate the html
-  const cards = document.querySelectorAll('.card');
-  cardData.forEach((item, index) => {
-    const card = document.createElement('div');
-    const face = document.createElement('img');
-    const back = document.createElement('div');
-    card.classList = 'card';
-    face.classList = 'face';
-    back.classList = 'back';
+  // const cards = document.querySelectorAll('.card');
+  cardData.forEach((item, index) => {             //for each item in randomized card data
+    const card = document.createElement('div');   //generating the html element
+    const face = document.createElement('img');   //generating the html element
+    const back = document.createElement('div');   //generating the html element
+    card.classList = 'card';                      //assigning class to element
+    face.classList = 'face';                      //assigning class to element
+    back.classList = 'back';                      //assigning class to element
     
-  //attach the info to the cards
+  //Setting the source of the face (img) element and setting attributes of card 
     face.src = item.imgSrc;
     card.setAttribute('name', item.name);
 
-  //attach card to the section
-    
+  //append card to the section, face and back to card
   section.appendChild(card);
   card.appendChild(face);
   card.appendChild(back);
-    card.addEventListener('click', (e) => {
+    
+    card.addEventListener('click', (e) => {       // adding event listener to card on click and checks if flipped
       card.classList.toggle("toggleCard");
       card.classList.toggle("flipped"); 
-      checkCards(e.currentTarget);
+      checkCards(e.currentTarget);      
     })  
   });
 };
 
-
-//check cards
+//check if two flipped cards match; 
 const checkCards = (e) => {
   console.log(e);
   const clickedCard = e.target;
   const flippedCards = document.querySelectorAll('.flipped');
   const toggleCard = document.querySelectorAll('.toggleCard');
   console.log(flippedCards);
-  //Logic
+
+  //Logic; 
   if (flippedCards.length === 2) {
-    if (
-      flippedCards[0].getAttribute('name') ===
+    if (                                          
+      flippedCards[0].getAttribute('name') ===        //if two flipped cards have the same attribute 
       flippedCards[1].getAttribute('name')
     ) {
-      console.log('match');
+      console.log('match');                           //console log match, and for each flipped card, remove class flipped from card element, set pointerEvents to none so those cards can't be interacted with
       flippedCards.forEach((card) => {
         card.classList.remove('flipped');
         card.style.pointerEvents = 'none';
       });
     } else {
-      console.log('wrong');
+      console.log('wrong');                         //else, console log the message wrong and for each flipped card, remove the class (flipped) from card element
       flippedCards.forEach((card) => {
         card.classList.remove('flipped');
-        setTimeout(() => card.classList.remove('toggleCard'), 1000);
+        setTimeout(() => card.classList.remove('toggleCard'), 1000);      //and remove toggleCard after 1000ms so the cards can go back to it's original state
       });  
     }
-          //Run a check to see if we won the game
+          //Run a check to see if we won the game, in 1000ms 
 
           setTimeout(() => {
             const toggleCard = document.querySelectorAll(".toggleCard");
             if (toggleCard.length === 12) {
-              restart("Victory");
+              openModal("Victory!");
             }
           }, 1000);
   }
 };
 
+// Open the modal and display the message
+const openModal = (text) => {
+  // Get the modal
+  const modal = document.getElementById("myModal");
+  // Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+  
+  const modalContent = document.querySelector(".modal-content p");
+  modalContent.textContent = text;
+  modal.style.display = "block";
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+  modal.style.display = "none";
+  }
+  
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+}
+
 //Restart
-const restart = (text) => {
+const restart = () => {
   let cardData = randomize();
   let faces = document.querySelectorAll('.face');
   let cards = document.querySelectorAll('.card');
@@ -112,20 +134,19 @@ const restart = (text) => {
   });
   // Display the game status
   const gameStatus = document.getElementById('game-status');
-  gameStatus.textContent = text;
+  gameStatus.textContent = 'Game Restarted!';
 
-  // Display the game status in a pop-up
-  alert(text);
 };
-
 
 // Select the restart button
 const restartButton = document.getElementById('restart-button');
 
 // Add a click event listener to the restart button
 restartButton.addEventListener('click', () => {
-  restart('Game Restarted!');
+  restart();
+  openModal('Game Restarted!');
 });
+
 
 cardGenerator();
 
