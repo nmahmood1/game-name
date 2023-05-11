@@ -80,17 +80,16 @@ const checkCards = (e) => {
       flippedCards.forEach((card) => {
         card.classList.remove('flipped');
         setTimeout(() => card.classList.remove('toggleCard'), 1000);
-      });
-      
+      });  
     }
-  //Run a check to see if we won the game
+          //Run a check to see if we won the game
 
-    setTimeout(() => {
-      const toggleCard = document.querySelectorAll(".toggleCard");
-      if (toggleCard.length === 12) {
-        restart("Victory");
-      }
-    }, 1000);
+          setTimeout(() => {
+            const toggleCard = document.querySelectorAll(".toggleCard");
+            if (toggleCard.length === 12) {
+              restart("Victory");
+            }
+          }, 1000);
   }
 };
 
@@ -102,17 +101,23 @@ const restart = (text) => {
   section.style.pointerEvents = 'none';
   cardData.forEach((item, index) => {
     cards[index].classList.remove('toggleCard');
+
     //Randomize
     setTimeout(() => {
       cards[index].style.pointerEvents = 'all';
       faces[index].src = item.imgSrc;
       cards[index].setAttribute('name', item.name);
       section.style.pointerEvents = 'all';
-    }, 100)
+    }, 20)
   });
+  // Display the game status
+  const gameStatus = document.getElementById('game-status');
+  gameStatus.textContent = text;
+
+  // Display the game status in a pop-up
+  alert(text);
 };
 
-cardGenerator();
 
 // Select the restart button
 const restartButton = document.getElementById('restart-button');
@@ -121,5 +126,7 @@ const restartButton = document.getElementById('restart-button');
 restartButton.addEventListener('click', () => {
   restart('Game Restarted!');
 });
+
+cardGenerator();
 
 

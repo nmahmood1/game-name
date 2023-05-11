@@ -6,12 +6,12 @@
 
 body {
   height: 100vh;
-  background: #74ebd5;
+  /* background: #74ebd5;
   background: -webkit-linear-gradient(
     to right, 
     #acb6e5,
     #74ebd5
-  );
+  ); */
   background: linear-gradient(to right, #acb6e5, #74ebd5);
   display: flex;
   justify-content: center;
@@ -19,8 +19,11 @@ body {
   flex-direction: column;
 }
 
-.memoryCard {
-  
+h1 {
+  color: #731688;
+  text-align: center;
+  margin: auto;
+  font-family: 'Poiret One', cursive;
 }
 
 section {
@@ -35,8 +38,8 @@ section {
   position: relative;
   transform-style: preserve-3d;
   transition: all 2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px;
- 
+  box-shadow: rgba(79, 114, 171, 0.2) 0px 5px;
+
 }
 
 .face, 
@@ -48,19 +51,22 @@ section {
 }
 
 .back {
-  background: white;
+  background: rgb(7, 138, 171);
   backface-visibility: hidden;
 
 }
-
 .toggleCard {
   transform: rotateY(180deg);
-
 }
 
-#restart-button > button{
+#restart-button {
   background-image: url("/images/refresh.png");
   background-repeat: no-repeat;
-  width: 50px;
-  height: 20px; 
+  background-size: contain;
+  width: 35px;
+  height: 35px; 
+  position: relative;
+  transform: translateY(-100px);
+  border: #731688;
+  padding: 0%;
 }
