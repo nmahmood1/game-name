@@ -20,7 +20,7 @@ The goal of the game is to match all pairs of cards with as few moves as possibl
 
 ![Image](images/Win%20state.png)
 
-![Image](images/refresh.png)
+![Image](images/restarted.png)
 
 ## Getting Started
 
